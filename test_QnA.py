@@ -32,7 +32,7 @@ def get_top_reply(text, df, n=1):
     return top_answer
 
 
-def test_QnA(csv_file, openai_key, num_replies=4):
+def test_QnA(path, openai_key, num_replies=4):
     
     openai.api_key = openai_key
     
