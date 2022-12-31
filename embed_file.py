@@ -40,7 +40,7 @@ def batch_embed(df):
     df["Embeddings"] = embeddings
     return df
 
-def embedd_file(file_to_embed, target_path, openai_key):
+def embed_file(file_to_embed, target_path, openai_key):
     
     openai.api_key = openai_key
     
