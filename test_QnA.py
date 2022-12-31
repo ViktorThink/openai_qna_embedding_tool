@@ -18,11 +18,11 @@ def text_search(text, df):
       df["similarities"] = df.Embeddings.apply(lambda x: cosine_similarity(x, embedding))
     return df
 
-def get_top_reply(text, df, n=1):
+def get_top_reply(text, df, n=1, minimum_similarity=0.85):
     df = copy.copy(df)
     df = text_search(text, df)
     df = df.sort_values("similarities", ascending=False).head(n)
-    if df.iloc[0]["similarities"] < 0.85:
+    if df.iloc[0]["similarities"] < minimum_similarity:
         top_question = "?"
         top_answer = "Sorry, I don't know the answer to that question."
     else:
@@ -32,12 +32,12 @@ def get_top_reply(text, df, n=1):
     return top_answer
 
 
-def test_QnA(path, openai_key, num_replies=4):
+def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85):
     
     openai.api_key = openai_key
     
     df = pickle.load(open(path, "rb"))
     
     for i in range(num_replies):
-      reply = get_top_reply(input("Message: "), df)
+      reply = get_top_reply(input("Message: "), df,minimum_similarity=minimum_similarity)
       print("Reply:", reply)
