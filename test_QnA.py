@@ -11,7 +11,7 @@ def get_embedding_from_text(text):
     )
     return embedding
 
-def text_search(text, embeddings):
+def text_search(text, df):
     embedding = get_embedding_from_text(text)
 
     for item in embeddings:
