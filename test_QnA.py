@@ -14,7 +14,7 @@ def get_embedding_from_text(text):
 def text_search(text, df):
     embedding = get_embedding_from_text(text)
 
-    for item in embedding:
+    for item in df:
       df["similarities"] = df.Embeddings.apply(lambda x: cosine_similarity(x, embedding))
     return df
 
