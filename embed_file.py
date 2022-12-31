@@ -41,8 +41,8 @@ def batch_embed(df):
     df["Embeddings"] = embeddings
     return df
 
-def save_csv(df, path):
-    df.to_csv(path, index=False) 
+def save_pickle(df, path):
+    pickle.dump(df, open(path, "wb"))
 
 
 def embed_file(file_to_embed, target_path, openai_key):
@@ -54,6 +54,6 @@ def embed_file(file_to_embed, target_path, openai_key):
     
     if "Embeddings" not in df:
         df = batch_embed(df)
-        save_csv(df, target_path)
+        save_pickle(df, target_path)
     else:
         print("Embeddingts already exists found")

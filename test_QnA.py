@@ -2,7 +2,7 @@ import openai
 import pandas as pd
 from openai.embeddings_utils import get_embedding, cosine_similarity
 import copy
-
+import pickle
 
 def get_embedding_from_text(text):
     embedding = get_embedding(
@@ -36,7 +36,7 @@ def test_QnA(csv_file, openai_key, num_replies=4):
     
     openai.api_key = openai_key
     
-    df = pd.read_csv(csv_file).dropna()
+    df = pickle.load(open(path, "rb"))
     
     for i in range(num_replies):
       reply = get_top_reply(input("Message: "), df)
