@@ -1,5 +1,5 @@
 import openai
-import pandas
+import pandas as pd
 
 
 def load_questions_answers(path):
