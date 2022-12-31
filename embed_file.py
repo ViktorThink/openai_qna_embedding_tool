@@ -4,7 +4,7 @@ from openai.embeddings_utils import get_embedding, cosine_similarity
 import pickle
 
 
-def load_questions_answers(path):
+def load_questions_answers(path, reverse_columns=False):
     if ".csv" in path:
         df = pd.read_csv(path).dropna()
     elif ".json" in path:
@@ -17,10 +17,13 @@ def load_questions_answers(path):
       return df
 
     else:
-
-      df.rename(columns = {df.columns[0]:'Questions'}, inplace = True)
-      df.rename(columns = {df.columns[1]:'Answers'}, inplace = True)
-      return df
+        if not reverse_columns:
+            df.rename(columns = {df.columns[0]:'Questions'}, inplace = True)
+            df.rename(columns = {df.columns[1]:'Answers'}, inplace = True)
+        else:
+            df.rename(columns = {df.columns[1]:'Questions'}, inplace = True)
+            df.rename(columns = {df.columns[0]:'Answers'}, inplace = True)
+        return df
 
 
 
@@ -46,11 +49,11 @@ def save_pickle(df, path):
     pickle.dump(df, open(path, "wb"))
 
 
-def embed_file(file_to_embed, target_path, openai_key):
+def embed_file(file_to_embed, target_path, openai_key, reverse_columns=False):
     
     openai.api_key = openai_key
     
-    df = load_questions_answers(file_to_embed)
+    df = load_questions_answers(file_to_embed, reverse_columns=reverse_columns)
 
     
     if "Embeddings" not in df:
