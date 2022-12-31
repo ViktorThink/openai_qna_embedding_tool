@@ -1,5 +1,6 @@
 import openai
 import pandas as pd
+from openai.embeddings_utils import get_embedding, cosine_similarity
 
 
 def load_questions_answers(path):
