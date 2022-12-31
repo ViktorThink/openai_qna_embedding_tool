@@ -41,6 +41,10 @@ def batch_embed(df):
     df["Embeddings"] = embeddings
     return df
 
+def save_csv(df, path):
+    df.to_csv(path, index=False) 
+
+
 def embed_file(file_to_embed, target_path, openai_key):
     
     openai.api_key = openai_key
