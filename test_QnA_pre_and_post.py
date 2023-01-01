@@ -21,7 +21,7 @@ def text_search(text, df):
 def process(prompt, dialog, model_name):
     
     dialog_text=""
-    for i in range(dialog):
+    for i in range(len(dialog)):
         if i % 2 == 0:
             dialog_text = dialog_text + "User: " + dialog[i]+"\n"
         else:
