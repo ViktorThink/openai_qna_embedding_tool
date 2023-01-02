@@ -27,8 +27,8 @@ def process(prompt, dialog, model_name):
         else:
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
-    prompt=prompt.strip()+"\n"+dialog_text.strip() + "\nRewritten last message:"
-    print("prompt\n",prompt)
+    prompt=prompt.strip()+"\n"+dialog_text.strip() + "\n\nRewritten last message:"
+    # print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
