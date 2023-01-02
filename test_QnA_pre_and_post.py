@@ -76,6 +76,7 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         dialog.append(from_user)
         if preprocess_prompt:
             from_user = process(preprocess_prompt, dialog[-3:], model_name)
+            dialog[-1] = from_user
             print("preprocess_prompt", from_user)
         reply = get_top_reply(from_user, df,minimum_similarity=minimum_similarity)
         
