@@ -28,11 +28,11 @@ def process(prompt, dialog, model_name):
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
     prompt=prompt+dialog_text.strip() + "\nRewritten last message:"
-    
+    print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
-    temperature=0.5,
+    temperature=0.1,
     top_p=1,
     frequency_penalty=0,
     stop=["#"],
