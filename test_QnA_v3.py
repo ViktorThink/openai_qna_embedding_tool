@@ -43,7 +43,7 @@ def pre_process(prompt, dialog, model_name):
     
     return reply
 
-def post_process(prompt, dialog, model_name):
+def post_process(prompt, dialog, model_name, info):
     dialog=dialog[-3:]
     dialog_text=""
     for i in range(len(dialog)):
@@ -108,7 +108,7 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         
         print("info", info)
         if info:
-            reply = post_process(postprocess_prompt, dialog, model_name)
+            reply = post_process(postprocess_prompt, dialog, model_name, info)
             print("postprocess_prompt:", reply)
         else:
             reply = "Sorry, I don't know the answer to that question."
