@@ -99,7 +99,7 @@ def get_info(text, df, n=3, minimum_similarity=0.85):
     for i in range(n):
         if df.iloc[i]["similarities"] > minimum_similarity:
             if df["Answers"].iloc[i] not in top_answer:
-                top_answer = top_answer + " " + df["Answers"].iloc[i]
+                top_answer = top_answer + " " + df["Answers"].iloc[i].strip()
     info= top_answer.strip()
 
 
