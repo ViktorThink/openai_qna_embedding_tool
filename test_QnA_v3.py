@@ -29,7 +29,7 @@ def pre_process(prompt, dialog, model_name):
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
     prompt=prompt.strip()+"\n"+dialog_text.strip() + "\n\nRelevant context:"
-    print("prompt\n",prompt)
+    # print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
@@ -53,7 +53,7 @@ def post_process(prompt, dialog, model_name, info):
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
     prompt=prompt.strip()+"\nInfo: "+ info + "\n" + dialog_text.strip() + "\nAI:"
-    print("prompt\n",prompt)
+    # print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
@@ -66,7 +66,31 @@ def post_process(prompt, dialog, model_name, info):
     reply = reply["choices"][0]["text"].strip()
     
     return reply
-        
+
+def general_process(prompt, dialog, model_name):
+    dialog=dialog[-3:]
+    dialog_text=""
+    for i in range(len(dialog)):
+        if i % 2 == 0:
+            dialog_text = dialog_text + "User: " + dialog[i]+"\n"
+        else:
+            dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
+    
+    prompt=prompt.strip() + "\n" + dialog_text.strip() + "\nAI:"
+    # print("prompt\n",prompt)
+    reply = openai.Completion.create(
+    model=model_name,
+    prompt=prompt,
+    temperature=0.1,
+    top_p=1,
+    frequency_penalty=0,
+    stop=["#"],
+    max_tokens=1000)
+    
+    reply = reply["choices"][0]["text"].strip()
+    
+    return reply
+      
 def get_info(text, df, n=3, minimum_similarity=0.85):
     df = copy.copy(df)
     df = text_search(text, df)
@@ -82,7 +106,7 @@ def get_info(text, df, n=3, minimum_similarity=0.85):
     return info
 
 
-def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess_prompt=None, postprocess_prompt=None, model_name="text-davinci-003"):
+def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess_prompt=None, postprocess_prompt=None, general_prompt=None,model_name="text-davinci-003"):
     
     if preprocess_prompt:
         with open(preprocess_prompt, 'r') as file:
@@ -112,7 +136,7 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
             reply = post_process(postprocess_prompt, dialog, model_name, info)
             print("postprocess_prompt:", reply)
         else:
-            reply = "Sorry, I don't know the answer to that question."
+            reply = general_process(general_prompt, dialog, model_name)
             print("General answer", reply)
         dialog.append(reply)
             
