@@ -116,6 +116,10 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         with open(postprocess_prompt, 'r') as file:
             postprocess_prompt = file.read()
             
+    if general_prompt:
+        with open(general_prompt, 'r') as file:
+            general_prompt = file.read()   
+            
     openai.api_key = openai_key
     
     df = pickle.load(open(path, "rb"))
