@@ -106,7 +106,7 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
             
         info = get_info(from_user, df,minimum_similarity=minimum_similarity)
         
-        print("Reply", reply)
+        print("info", info)
         if info:
             reply = post_process(postprocess_prompt, dialog, model_name)
             dialog.append(reply)
