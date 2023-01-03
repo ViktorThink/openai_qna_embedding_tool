@@ -101,8 +101,9 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         from_user = input("Message: ")
         dialog.append(from_user)
         
-        from_user = pre_process(preprocess_prompt, dialog, model_name)
-        print("preprocess_prompt", from_user)
+        context = pre_process(preprocess_prompt, dialog, model_name)
+        from_user = from_user + " " + context
+        print("preprocess_prompt", context)
             
         info = get_info(from_user, df,minimum_similarity=minimum_similarity)
         
