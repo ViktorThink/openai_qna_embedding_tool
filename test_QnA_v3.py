@@ -33,7 +33,7 @@ def pre_process(prompt, dialog, model_name):
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
-    temperature=0.1,
+    temperature=0,
     top_p=1,
     frequency_penalty=0,
     stop=["#"],
@@ -77,7 +77,7 @@ def general_process(prompt, dialog, model_name):
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
     prompt=prompt.strip() + "\n" + dialog_text.strip() + "\nAI:"
-    # print("prompt\n",prompt)
+    print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
