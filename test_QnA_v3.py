@@ -109,9 +109,9 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         print("info", info)
         if info:
             reply = post_process(postprocess_prompt, dialog, model_name)
-            dialog.append(reply)
             print("postprocess_prompt:", reply)
         else:
-            print("Sorry, I don't know the answer to that question.")
-            dialog.append(reply)
+            reply = "Sorry, I don't know the answer to that question."
+            print("General answer", reply)
+        dialog.append(reply)
             
