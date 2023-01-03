@@ -67,14 +67,12 @@ def post_process(prompt, dialog, model_name):
     
     return reply
         
-def get_info(text, df, n=1, minimum_similarity=0.85):
+def get_info(text, df, n=3, minimum_similarity=0.85):
     df = copy.copy(df)
     df = text_search(text, df)
     df = df.sort_values("similarities", ascending=False).head(n)
-    print("df",df)
     top_answer = ""
-    for i in range(3):
-        print("i",i)
+    for i in range(n):
         if df.iloc[i]["similarities"] > minimum_similarity:
             top_answer = top_answer + " " + df["Answers"].iloc[i]
     info= top_answer.strip()
