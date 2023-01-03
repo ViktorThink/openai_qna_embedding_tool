@@ -71,15 +71,16 @@ def get_info(text, df, n=1, minimum_similarity=0.85):
     df = copy.copy(df)
     df = text_search(text, df)
     df = df.sort_values("similarities", ascending=False).head(n)
-    
+    print("df",df)
     top_answer = ""
     for i in range(3):
+        print("i",i)
         if df.iloc[i]["similarities"] > minimum_similarity:
-            top_answer = top_answer + " " + df["Answers"].iloc[0]
-    top_answer= top_answer.split()
+            top_answer = top_answer + " " + df["Answers"].iloc[i]
+    info= top_answer.strip()
 
 
-    return top_answer
+    return info
 
 
 def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess_prompt=None, postprocess_prompt=None, model_name="text-davinci-003"):
@@ -100,10 +101,10 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
         dialog=dialog[-4:]
         from_user = input("Message: ")
         dialog.append(from_user)
-        
-        context = pre_process(preprocess_prompt, dialog, model_name)
-        from_user = from_user + " " + context
-        print("preprocess_prompt", context)
+        if len(dialog) > 1:
+            context = pre_process(preprocess_prompt, dialog, model_name)
+            from_user = from_user + " " + context
+            print("preprocess_prompt", context)
             
         info = get_info(from_user, df,minimum_similarity=minimum_similarity)
         
