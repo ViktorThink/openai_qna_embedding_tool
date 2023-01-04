@@ -69,6 +69,9 @@ def post_process(prompt, dialog, model_name, info):
 
 def general_process(prompt, dialog, model_name):
     dialog=dialog[-3:]
+    if len(dialog) == 1:
+        dialog= ["Bom dia!","Bom dia, como posso ajudá-los?"]
+        
     dialog_text=""
     for i in range(len(dialog)):
         if i % 2 == 0:
