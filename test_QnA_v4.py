@@ -82,7 +82,7 @@ def general_process(prompt, dialog, model_name):
             dialog_text = dialog_text + "AI: " + dialog[i]+"\n"
     
     prompt=prompt.strip() + "\n" + dialog_text.strip() + "\nAI:"
-    # print("prompt\n",prompt)
+    print("prompt\n",prompt)
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
@@ -147,6 +147,6 @@ def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess
             print("Post processed reply:", reply)
         else:
             reply = general_process(general_prompt, dialog, model_name)
-            print("General answer", reply)
+            print("General answer:", reply)
         dialog.append(reply)
             
