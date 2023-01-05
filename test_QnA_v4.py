@@ -59,7 +59,7 @@ def post_process(prompt, dialog, model_name, info):
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
-    temperature=0.1,
+    temperature=temperature,
     top_p=1,
     frequency_penalty=0,
     stop=["#"],
@@ -86,7 +86,7 @@ def general_process(prompt, dialog, model_name):
     reply = openai.Completion.create(
     model=model_name,
     prompt=prompt,
-    temperature=0.1,
+    temperature=temperature,
     top_p=1,
     frequency_penalty=0,
     stop=["#"],
@@ -111,7 +111,10 @@ def get_info(text, df, n=3, minimum_similarity=0.85):
     return info
 
 
-def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess_prompt=None, postprocess_prompt=None, general_prompt=None,model_name="text-davinci-003"):
+def test_QnA(path, openai_key, num_replies=4, minimum_similarity=0.85,preprocess_prompt=None, postprocess_prompt=None, general_prompt=None,model_name="text-davinci-003", temperature_openai=0.1):
+    
+    global temperature
+    temperature=temperature_openai
     
     if preprocess_prompt:
         with open(preprocess_prompt, 'r') as file:
